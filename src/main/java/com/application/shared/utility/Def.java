@@ -1,6 +1,12 @@
 package com.application.shared.utility;
 
+
+
+import org.json.JSONArray;
 import org.json.JSONObject;
+
+import io.micrometer.common.util.StringUtils;
+
 
 public class Def {
 	
@@ -28,5 +34,55 @@ public class Def {
 	public static String getString(JSONObject json, String key) {
 	    return json.optString(key, null);
 	}
+	
+	public static Long getLong(JSONObject json, String key) {
+        String value = json.optString(key, null);
+        return StringUtils.isNotBlank(value) ? Long.parseLong(value) : null;
+    }
+	
+	public static Integer getInteger(JSONObject json, String key) {
+        String value = json.optString(key, null);
+        return StringUtils.isNotBlank(value) ? Integer.parseInt(value) : null;
+    }
+
+    public static Boolean getBoolean(JSONObject json, String key) {
+        String value = json.optString(key, null);
+        return StringUtils.isNotBlank(value) ? Boolean.parseBoolean(value) : null;
+    }
+    
+    public static Float getFloat(JSONObject json, String key) {
+        String value = json.optString(key, null);
+        return StringUtils.isNotBlank(value) ? Float.parseFloat(value) : null;
+    }
+
+    public static Double getDouble(JSONObject json, String key) {
+        String value = json.optString(key, null);
+        return StringUtils.isNotBlank(value) ? Double.parseDouble(value) : null;
+    }
+    
+    public static Object getObject(JSONObject json, String key) {
+        return json.opt(key);
+    }
+    
+    public static String getArrayString(JSONObject json, String key) {
+        if (json.has(key)) {
+            JSONArray jsonArray = json.optJSONArray(key);
+            if (jsonArray != null && jsonArray.length() > 0) {
+                return jsonArray.toString();
+            }
+        }
+        return null;
+    }
+    
+    public static Object getArrayObj(JSONObject json, String key) {
+        if (json.has(key)) {
+            JSONArray jsonArray = json.optJSONArray(key);
+            if (jsonArray != null && jsonArray.length() > 0) {
+                return jsonArray;
+            }
+        }
+        return null;
+    }
+	
 
 }
